@@ -12,6 +12,11 @@ public class Municipio {
 		this.nombre = nombre;
 		this.provincia = provincia;
 	}
+	
+	public Municipio(String nombre, Provincia provincia) {
+		this.nombre = nombre;
+		this.provincia = provincia;
+	}
 
 	public int getId() {
 		return id;

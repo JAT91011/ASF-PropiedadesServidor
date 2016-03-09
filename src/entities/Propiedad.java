@@ -12,11 +12,13 @@ public class Propiedad {
 	private float		longitud;
 	private double		area;
 	private double		precio;
-	private ImageIcon	imagen;
 	private Municipio	municipio;
 
-	public Propiedad(int id, String nombre, String descripcion, String direccion, float latitud, float longitud, double area, double precio,
-			ImageIcon imagen, Municipio municipio) {
+	public Propiedad() {
+		
+	}
+	
+	public Propiedad(int id, String nombre, String descripcion, String direccion, float latitud, float longitud, double area, double precio, Municipio municipio) {
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -25,7 +27,17 @@ public class Propiedad {
 		this.longitud = longitud;
 		this.area = area;
 		this.precio = precio;
-		this.imagen = imagen;
+		this.municipio = municipio;
+	}
+	
+	public Propiedad(String nombre, String descripcion, String direccion, float latitud, float longitud, double area, double precio, Municipio municipio) {
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.direccion = direccion;
+		this.latitud = latitud;
+		this.longitud = longitud;
+		this.area = area;
+		this.precio = precio;
 		this.municipio = municipio;
 	}
 
@@ -92,15 +104,6 @@ public class Propiedad {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
-
-	public ImageIcon getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(ImageIcon imagen) {
-		this.imagen = imagen;
-	}
-
 	public Municipio getMunicipio() {
 		return municipio;
 	}
@@ -112,6 +115,6 @@ public class Propiedad {
 	@Override
 	public String toString() {
 		return "Propiedad [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", direccion=" + direccion + ", latitud=" + latitud
-				+ ", longitud=" + longitud + ", area=" + area + ", precio=" + precio + ", imagen=" + imagen + ", municipio=" + municipio + "]";
+				+ ", longitud=" + longitud + ", area=" + area + ", precio=" + precio + ", municipio=" + municipio + "]";
 	}
 }
