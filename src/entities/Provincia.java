@@ -4,8 +4,11 @@ public class Provincia {
 	private int		id;
 	private String	nombre;
 
+	public Provincia() {
+		
+	}
+	
 	public Provincia(int id, String nombre) {
-		super();
 		this.id = id;
 		this.nombre = nombre;
 	}
@@ -28,10 +31,5 @@ public class Provincia {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	@Override
-	public String toString() {
-		return "Provincia [id=" + id + ", nombre=" + nombre + "]";
 	}
 }

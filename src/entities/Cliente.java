@@ -10,6 +10,10 @@ public class Cliente {
 	private String	direccion;
 	private int		codigoPostal;
 
+	public Cliente() {
+		
+	}
+	
 	public Cliente(int dni, String nombre, String apellidos, String email, int telefono, String direccion, int codigoPostal) {
 		this.dni = dni;
 		this.nombre = nombre;
@@ -74,11 +78,5 @@ public class Cliente {
 
 	public void setCodigoPostal(int codigoPostal) {
 		this.codigoPostal = codigoPostal;
-	}
-
-	@Override
-	public String toString() {
-		return "Cliente [dni=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email + ", telefono=" + telefono
-				+ ", direccion=" + direccion + ", codigoPostal=" + codigoPostal + "]";
 	}
 }

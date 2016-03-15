@@ -36,7 +36,7 @@ public class BaseDatos {
     
     // MÉTODOS SERVICIOS WEB
     
-    public Propiedad[] obtenetPropiedades () throws SQLException{        
+    public Propiedad[] obtenerPropiedades () throws SQLException{        
     	int numProp = numPropiedades();
     	Propiedad [] propiedades = new Propiedad [numProp];
     	
@@ -78,7 +78,7 @@ public class BaseDatos {
     	return p;
     }
     
-    public Propiedad[] obtenetPropiedadesPorMunicipio (String municipio) throws SQLException{        
+    public Propiedad[] obtenerPropiedadesPorMunicipio (String municipio) throws SQLException{        
     	int numProp = numPropiedadesEnMunicipio(municipio);
     	Propiedad [] propiedades = new Propiedad [numProp];
     	Municipio m = obtenerMunicipioPorNombre(municipio);
@@ -105,7 +105,7 @@ public class BaseDatos {
     	}
     }
     
-    public Propiedad[] obtenetPropiedadesPorNombre (String nombre) throws SQLException{        
+    public Propiedad[] obtenerPropiedadesPorNombre (String nombre) throws SQLException{        
     	int numProp = numPropiedadesConNombre(nombre);
     	Propiedad [] propiedades = new Propiedad [numProp];
     	

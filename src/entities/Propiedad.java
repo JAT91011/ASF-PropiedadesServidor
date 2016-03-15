@@ -1,7 +1,5 @@
 package entities;
 
-import javax.swing.ImageIcon;
-
 public class Propiedad {
 
 	private int			id;
@@ -110,11 +108,5 @@ public class Propiedad {
 
 	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
-	}
-
-	@Override
-	public String toString() {
-		return "Propiedad [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", direccion=" + direccion + ", latitud=" + latitud
-				+ ", longitud=" + longitud + ", area=" + area + ", precio=" + precio + ", municipio=" + municipio + "]";
 	}
 }

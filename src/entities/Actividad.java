@@ -7,6 +7,10 @@ public class Actividad {
 	private String	descripcion;
 	private int		edadMinima;
 
+	public Actividad() {
+		
+	}
+	
 	public Actividad(int id, String nombre, String descripcion, int edadMinima) {
 		this.id = id;
 		this.nombre = nombre;
@@ -44,10 +48,5 @@ public class Actividad {
 
 	public void setEdadMinima(int edadMinima) {
 		this.edadMinima = edadMinima;
-	}
-
-	@Override
-	public String toString() {
-		return "Actividad [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", edadMinima=" + edadMinima + "]";
 	}
 }

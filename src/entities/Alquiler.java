@@ -11,8 +11,11 @@ public class Alquiler {
 	private Date		fechaFin;
 	private double		precio;
 
+	public Alquiler() {
+		
+	}
+	
 	public Alquiler(Propiedad propiedad, Cliente cliente, Actividad actividad, Date fechaInicio, Date fechaFin, double precio) {
-		super();
 		this.propiedad = propiedad;
 		this.cliente = cliente;
 		this.actividad = actividad;
@@ -67,11 +70,5 @@ public class Alquiler {
 
 	public void setPrecio(double precio) {
 		this.precio = precio;
-	}
-
-	@Override
-	public String toString() {
-		return "Alquiler [propiedad=" + propiedad + ", cliente=" + cliente + ", actividad=" + actividad + ", fechaInicio=" + fechaInicio
-				+ ", fechaFin=" + fechaFin + ", precio=" + precio + "]";
 	}
 }
