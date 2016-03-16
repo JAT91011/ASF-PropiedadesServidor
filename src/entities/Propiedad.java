@@ -10,13 +10,13 @@ public class Propiedad {
 	private float		longitud;
 	private double		area;
 	private double		precio;
-	private Municipio	municipio;
+	private Provincia	provincia;
 
 	public Propiedad() {
 		
 	}
 	
-	public Propiedad(int id, String nombre, String descripcion, String direccion, float latitud, float longitud, double area, double precio, Municipio municipio) {
+	public Propiedad(int id, String nombre, String descripcion, String direccion, float latitud, float longitud, double area, double precio, Provincia provincia) {
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -25,10 +25,10 @@ public class Propiedad {
 		this.longitud = longitud;
 		this.area = area;
 		this.precio = precio;
-		this.municipio = municipio;
+		this.provincia = provincia;
 	}
 	
-	public Propiedad(String nombre, String descripcion, String direccion, float latitud, float longitud, double area, double precio, Municipio municipio) {
+	public Propiedad(String nombre, String descripcion, String direccion, float latitud, float longitud, double area, double precio, Provincia provincia) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.direccion = direccion;
@@ -36,7 +36,7 @@ public class Propiedad {
 		this.longitud = longitud;
 		this.area = area;
 		this.precio = precio;
-		this.municipio = municipio;
+		this.provincia = provincia;
 	}
 
 	public int getId() {
@@ -102,11 +102,12 @@ public class Propiedad {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
-	public Municipio getMunicipio() {
-		return municipio;
+
+	public Provincia getProvincia() {
+		return provincia;
 	}
 
-	public void setMunicipio(Municipio municipio) {
-		this.municipio = municipio;
+	public void setProvincia(Provincia provincia) {
+		this.provincia = provincia;
 	}
 }

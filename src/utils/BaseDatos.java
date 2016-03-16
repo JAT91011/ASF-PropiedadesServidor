@@ -1,11 +1,7 @@
 package utils;
 
 import java.sql.*;
-import java.util.ArrayList;
 
-import com.sun.corba.se.spi.orbutil.fsm.State;
-
-import entities.Municipio;
 import entities.Propiedad;
 import entities.Provincia;
 
@@ -44,14 +40,14 @@ public class BaseDatos {
     	String query = "SELECT * FROM propiedad";
         ResultSet rs = stmt.executeQuery(query);
         
-        Municipio m = null;
+        Provincia p = null;
         int pos = 0;
         while (rs.next()){
-        	m = obtenerMunicipio(rs.getInt("idMunicipio"));
+        	p = obtenerProvincia(rs.getInt("idProvincia"));
         	propiedades[pos] = new Propiedad(rs.getInt("idPropiedad"), rs.getString("nombre"), 
         			rs.getString("descripcion"), rs.getString("direccion"), 
         			rs.getFloat("latitud"), rs.getFloat("longitud"), rs.getDouble("area"), 
-        			rs.getDouble("precio"), m);
+        			rs.getDouble("precio"), p);
         	pos++;
         }
         rs.close();
@@ -65,27 +61,27 @@ public class BaseDatos {
     	String query = "SELECT * FROM propiedad WHERE idPropiedad = " + id;
     	ResultSet rs = stmt.executeQuery(query);
     	
-    	Municipio m = null;
-    	Propiedad p = null;
+    	Provincia p = null;
+    	Propiedad pro = null;
     	if (rs.next()) {
-    		m = obtenerMunicipio(rs.getInt("idMunicipio"));
-    		p = new Propiedad(rs.getInt("idPropiedad"), rs.getString("nombre"), 
+    		p = obtenerProvincia(rs.getInt("idProvincia"));
+    		pro = new Propiedad(rs.getInt("idPropiedad"), rs.getString("nombre"), 
         			rs.getString("descripcion"), rs.getString("direccion"), 
         			rs.getFloat("latitud"), rs.getFloat("longitud"), rs.getDouble("area"), 
-        			rs.getDouble("precio"), m);
+        			rs.getDouble("precio"), p);
     	}
     	
-    	return p;
+    	return pro;
     }
     
-    public Propiedad[] obtenerPropiedadesPorMunicipio (String municipio) throws SQLException{        
-    	int numProp = numPropiedadesEnMunicipio(municipio);
+    public Propiedad[] obtenerPropiedadesPorProvincia (String provincia) throws SQLException{        
+    	int numProp = numPropiedadesEnProvincia(provincia);
     	Propiedad [] propiedades = new Propiedad [numProp];
-    	Municipio m = obtenerMunicipioPorNombre(municipio);
+    	Provincia p = obtenerProvinciaPorNombre(provincia);
     	
-    	if (m != null && numProp > 0) {
+    	if (p != null && numProp > 0) {
     		Statement stmt = con.createStatement();
-        	String query = "SELECT * FROM propiedad WHERE idMunicipio = " + m.getId();
+        	String query = "SELECT * FROM propiedad WHERE idProvincia = " + p.getId();
             ResultSet rs = stmt.executeQuery(query);
             
             int pos = 0;
@@ -93,7 +89,7 @@ public class BaseDatos {
             	propiedades [pos] = new Propiedad(rs.getInt("idPropiedad"), rs.getString("nombre"), 
             			rs.getString("descripcion"), rs.getString("direccion"), 
             			rs.getFloat("latitud"), rs.getFloat("longitud"), rs.getDouble("area"), 
-            			rs.getDouble("precio"), m);
+            			rs.getDouble("precio"), p);
             	pos++;
             }
             rs.close();
@@ -113,14 +109,14 @@ public class BaseDatos {
     	String query = "SELECT * FROM propiedad WHERE nombre LIKE '%" + nombre + "%'";
         ResultSet rs = stmt.executeQuery(query);
         
-        Municipio m = null;
+        Provincia p = null;
         int pos = 0;
         while (rs.next()){
-        	m = obtenerMunicipio(rs.getInt("idMunicipio"));
+        	p = obtenerProvincia(rs.getInt("idProvincia"));
         	propiedades [pos] = new Propiedad(rs.getInt("idPropiedad"), rs.getString("nombre"), 
         			rs.getString("descripcion"), rs.getString("direccion"), 
         			rs.getFloat("latitud"), rs.getFloat("longitud"), rs.getDouble("area"), 
-        			rs.getDouble("precio"), m);
+        			rs.getDouble("precio"), p);
         	pos++;
         }
         rs.close();
@@ -132,9 +128,9 @@ public class BaseDatos {
     public void insertarPropiedad (Propiedad p) throws SQLException {
     	Statement stmt = con.createStatement();
     	String query = "INSERT INTO propiedad (nombre, descripcion, direccion, latitud, longitud, "
-    			+ "area, precio, idMunicipio) VALUES ('" + p.getNombre() + "', '" + p.getDescripcion() + "', "
+    			+ "area, precio, idProvincia) VALUES ('" + p.getNombre() + "', '" + p.getDescripcion() + "', "
     					+ "'" + p.getDireccion() + "', " + p.getLatitud() + ", " + p.getLongitud() + ", "
-    							+ p.getArea() +", " + p.getPrecio() + ", " + p.getMunicipio().getId() + ")";
+    							+ p.getArea() +", " + p.getPrecio() + ", " + p.getProvincia().getId() + ")";
     	stmt.executeUpdate(query);
     	stmt.close();
     }
@@ -144,7 +140,7 @@ public class BaseDatos {
     	String query = "UPDATE propiedad SET nombre = '" + p.getNombre() + "', descripcion = '" + p.getDescripcion() + "',"
     			+ " direccion = '" + p.getDireccion() + "', latitud = " + p.getLatitud() + ", "
     					+ "longitud = " + p.getLongitud() + ", area = " + p.getArea() + ", "
-    							+ "precio = " + p.getPrecio() + ", idMunicipio = " + p.getMunicipio().getId() + " WHERE "
+    							+ "precio = " + p.getPrecio() + ", idProvincia = " + p.getProvincia().getId() + " WHERE "
     									+ "idPropiedad = " + p.getId();
     	stmt.executeUpdate(query);
     	stmt.close();
@@ -196,70 +192,7 @@ public class BaseDatos {
         return p;
     }
     
-    public boolean existeMunicipioConNombre (String nomMunicipio) throws SQLException {
-    	Statement stmt = con.createStatement();
-    	String query = "SELECT * FROM municipio WHERE nombre = '" + nomMunicipio + "'";
-        ResultSet rs = stmt.executeQuery(query);
-        
-        if (rs.next()) {
-        	rs.close();
-        	stmt.close();
-        	return true;
-        } else {
-        	rs.close();
-            stmt.close();
-            return false;
-        }
-    }
-    
-    public void insertarMunicipio (Municipio m) throws SQLException {
-    	Statement stmt = con.createStatement();
-    	String query = "INSERT INTO municipio (nombre, idProvincia) VALUES ('" + m.getNombre() + "',"
-    			+ " " + m.getProvincia().getId() + ")";
-    	stmt.executeUpdate(query);
-    	stmt.close();
-    }
-    
-    public Municipio obtenerMunicipioPorNombre (String nomMunicipio) throws SQLException {
-    	Municipio m = null;
-    	
-    	Statement stmt = con.createStatement();
-    	String query = "SELECT * FROM municipio WHERE nombre = '" + nomMunicipio + "'";
-        ResultSet rs = stmt.executeQuery(query);
-        
-        Provincia p = null;
-        if (rs.next()) {
-        	p = obtenerProvincia(rs.getInt("idProvincia"));
-        	m = new Municipio(rs.getInt("idMunicipio"), rs.getString("nombre"), 
-        			p);
-        }
-        rs.close();
-        stmt.close();
-        
-        return m;
-    }
-    
     // MÉTODOS AUXILIARES
-    
-    public Municipio obtenerMunicipio (int id) throws SQLException {
-    	Municipio m = null;
-    	
-    	Statement stmt = con.createStatement();
-    	String query = "SELECT * FROM municipio WHERE idMunicipio = " + id;
-        ResultSet rs = stmt.executeQuery(query);
-        
-        Provincia p = null;
-        if (rs.next()) {
-        	p = obtenerProvincia(rs.getInt("idProvincia"));
-        	m = new Municipio(rs.getInt("idMunicipio"), rs.getString("nombre"), 
-        			p);
-        }
-        rs.close();
-        stmt.close();
-        
-        return m;
-    }
-    
     public Provincia obtenerProvincia (int id) throws SQLException {
     	Provincia p = null;
     	
@@ -291,12 +224,12 @@ public class BaseDatos {
     	return num;
     }
     
-    public int numPropiedadesEnMunicipio(String municipio) throws SQLException {
-    	Municipio m = obtenerMunicipioPorNombre(municipio);
+    public int numPropiedadesEnProvincia(String provincia) throws SQLException {
+    	Provincia p = obtenerProvinciaPorNombre(provincia);
     	
-    	if (m != null) {
+    	if (p != null) {
     		Statement stmt = con.createStatement();
-        	String query = "SELECT COUNT(*) FROM propiedad WHERE idMunicipio = " + m.getId();
+        	String query = "SELECT COUNT(*) FROM propiedad WHERE idProvincia = " + p.getId();
         	ResultSet rs = stmt.executeQuery(query);
         	
         	int num = 0;

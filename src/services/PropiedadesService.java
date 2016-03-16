@@ -1,10 +1,6 @@
 package services;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-
-
-import entities.Municipio;
 import entities.Propiedad;
 import entities.Provincia;
 import utils.BaseDatos;;
@@ -23,9 +19,9 @@ public class PropiedadesService {
 		return propiedades;
 	}
 	
-	public Propiedad[] obtenerPropiedadesPorMunicipio (String municipio) throws SQLException, ClassNotFoundException {
+	public Propiedad[] obtenerPropiedadesPorProvincia (String provincia) throws SQLException, ClassNotFoundException {
 		BaseDatos.obtenerInstancia().conectar();
-		Propiedad [] p = BaseDatos.obtenerInstancia().obtenerPropiedadesPorMunicipio(municipio);
+		Propiedad [] p = BaseDatos.obtenerInstancia().obtenerPropiedadesPorProvincia(provincia);
 		BaseDatos.obtenerInstancia().desconectar();
 		
 		return p;
@@ -85,27 +81,5 @@ public class PropiedadesService {
 		BaseDatos.obtenerInstancia().desconectar();
 		
 		return p;
-	}
-	
-	public boolean existeMunicipioConNombre (String nomMunicipio) throws ClassNotFoundException, SQLException {
-		BaseDatos.obtenerInstancia().conectar();
-		boolean resul = BaseDatos.obtenerInstancia().existeMunicipioConNombre(nomMunicipio);
-		BaseDatos.obtenerInstancia().desconectar();
-		
-		return resul;
-	}
-	
-	public void insertarMunicipio (Municipio m) throws ClassNotFoundException, SQLException {
-		BaseDatos.obtenerInstancia().conectar();
-		BaseDatos.obtenerInstancia().insertarMunicipio(m);
-		BaseDatos.obtenerInstancia().desconectar();
-	}
-	
-	public Municipio obtenerMunicipioPorNombre (String nomMunicipio) throws ClassNotFoundException, SQLException {
-		BaseDatos.obtenerInstancia().conectar();
-		Municipio m = BaseDatos.obtenerInstancia().obtenerMunicipioPorNombre(nomMunicipio);
-		BaseDatos.obtenerInstancia().desconectar();
-		
-		return m;
 	}
 }
