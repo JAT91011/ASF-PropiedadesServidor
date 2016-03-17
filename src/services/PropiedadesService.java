@@ -82,4 +82,11 @@ public class PropiedadesService {
 		
 		return p;
 	}
+	
+	public Provincia[] obtenerProvincias() throws ClassNotFoundException, SQLException {
+		BaseDatos.obtenerInstancia().conectar();
+		Provincia[] provincias = BaseDatos.obtenerInstancia().obtenerProvincias();
+		BaseDatos.obtenerInstancia().desconectar();
+		return provincias;
+	}
 }
