@@ -43,10 +43,19 @@ public class PropiedadesService {
 		return p;
 	}
 	
-	public void insertarPropiedad (Propiedad p) throws SQLException, ClassNotFoundException {
+	public String insertarPropiedad (Propiedad p) throws SQLException, ClassNotFoundException {
 		BaseDatos.obtenerInstancia().conectar();
-		BaseDatos.obtenerInstancia().insertarPropiedad(p);
-		BaseDatos.obtenerInstancia().desconectar();
+		// Comprobar si existe la provincia
+		Provincia provincia = BaseDatos.obtenerInstancia().obtenerProvinciaPorNombre(p.getProvincia().getNombre());
+		if(provincia != null) {
+			p.setProvincia(provincia);
+			BaseDatos.obtenerInstancia().insertarPropiedad(p);
+			BaseDatos.obtenerInstancia().desconectar();
+			return "OK";
+		} else {
+			BaseDatos.obtenerInstancia().desconectar();
+			return "ERR:No existe la provincia: " + p.getProvincia().getNombre();
+		}
 	}
 	
 	public void editarPropiedad (Propiedad p) throws SQLException, ClassNotFoundException {
@@ -59,27 +68,5 @@ public class PropiedadesService {
 		BaseDatos.obtenerInstancia().conectar();
 		BaseDatos.obtenerInstancia().borrarPropiedad(id);
 		BaseDatos.obtenerInstancia().desconectar();
-	}
-	
-	public boolean existeProvinciaConNombre (String provincia) throws SQLException, ClassNotFoundException {
-		BaseDatos.obtenerInstancia().conectar();
-		boolean resul = BaseDatos.obtenerInstancia().existeProvinciaConNombre(provincia);
-		BaseDatos.obtenerInstancia().desconectar();
-		
-		return resul;
-	}
-	
-	public void insertarProvincia (Provincia p) throws ClassNotFoundException, SQLException {
-		BaseDatos.obtenerInstancia().conectar();
-		BaseDatos.obtenerInstancia().insertarProvincia(p);
-		BaseDatos.obtenerInstancia().desconectar();
-	}
-	
-	public Provincia obtenerProvinciaPorNombre (String provincia) throws ClassNotFoundException, SQLException {
-		BaseDatos.obtenerInstancia().conectar();
-		Provincia p = BaseDatos.obtenerInstancia().obtenerProvinciaPorNombre(provincia);
-		BaseDatos.obtenerInstancia().desconectar();
-		
-		return p;
 	}
 }

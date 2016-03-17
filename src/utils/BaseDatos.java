@@ -30,7 +30,7 @@ public class BaseDatos {
         con.close();
     }    
     
-    // MÉTODOS SERVICIOS WEB
+    // METODOS SERVICIOS WEB
     
     public Propiedad[] obtenerPropiedades () throws SQLException{        
     	int numProp = numPropiedades();
@@ -192,7 +192,7 @@ public class BaseDatos {
         return p;
     }
     
-    // MÉTODOS AUXILIARES
+    // METODOS AUXILIARES
     public Provincia obtenerProvincia (int id) throws SQLException {
     	Provincia p = null;
     	
