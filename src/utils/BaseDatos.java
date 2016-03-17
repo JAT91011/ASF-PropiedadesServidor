@@ -74,6 +74,24 @@ public class BaseDatos {
         return propiedades;
     }
     
+    public Propiedad obtenerPropiedad (int id) throws SQLException {
+    	Statement stmt = con.createStatement();
+    	String query = "SELECT * FROM propiedad WHERE idPropiedad = " + id;
+    	ResultSet rs = stmt.executeQuery(query);
+    	
+    	Provincia p = null;
+    	Propiedad pro = null;
+    	if (rs.next()) {
+    		p = obtenerProvincia(rs.getInt("idProvincia"));
+    		pro = new Propiedad(rs.getInt("idPropiedad"), rs.getString("nombre"), 
+        			rs.getString("descripcion"), rs.getString("direccion"), 
+        			rs.getFloat("latitud"), rs.getFloat("longitud"), rs.getDouble("area"), 
+        			rs.getDouble("precio"), p);
+    	}
+    	
+    	return pro;
+    }
+    
     public Propiedad[] obtenerPropiedadesPorProvincia (String provincia) throws SQLException{        
     	int numProp = numPropiedadesEnProvincia(provincia);
     	Propiedad [] propiedades = new Propiedad [numProp];

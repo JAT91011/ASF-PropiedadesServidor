@@ -35,6 +35,14 @@ public class PropiedadesService {
 		return p;
 	}
 	
+	public Propiedad obtenerPropiedad (int id) throws SQLException, ClassNotFoundException {
+		BaseDatos.obtenerInstancia().conectar();
+		Propiedad p = BaseDatos.obtenerInstancia().obtenerPropiedad(id);
+		BaseDatos.obtenerInstancia().desconectar();
+		
+		return p;
+	}
+	
 	public String insertarPropiedad (Propiedad p) throws SQLException, ClassNotFoundException {
 		BaseDatos.obtenerInstancia().conectar();
 		// Comprobar si existe la provincia
