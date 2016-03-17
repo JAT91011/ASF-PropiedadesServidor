@@ -1,6 +1,5 @@
 package utils;
 
-import java.io.IOException;
 import java.sql.*;
 
 import entities.Propiedad;
@@ -18,13 +17,7 @@ public class BaseDatos {
     private String protocol = "jdbc:mysql";    
     
     private BaseDatos() {
-    	try {
-	    	if(numProvincias() == 0) {
-	    		cargarProvincias();
-	    	}
-    	} catch(SQLException e) {
-    		e.printStackTrace();
-    	}
+    	
     }
     
     public void conectar() throws ClassNotFoundException, SQLException{
@@ -35,18 +28,7 @@ public class BaseDatos {
     
     public void desconectar() throws SQLException{
         con.close();
-    }
-    
-    // CARGA DE DATOS EN LA BASE DE DATOS
-    private void cargarProvincias() throws SQLException {
-    	Statement statement = con.createStatement();
-    	try {
-    		statement.executeUpdate(Utilities.toString("data/provincias.sql"));
-    	} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	statement.close();
-    }
+    }    
     
     // MÉTODOS SERVICIOS WEB
     
@@ -187,27 +169,6 @@ public class BaseDatos {
         }
     }
     
-    public Provincia[] obtenerProvincias() throws SQLException {
-    	int numProvincias = numProvincias();
-    	Provincia[] provincias = new Provincia[numProvincias];
-    	
-    	Statement stmt = con.createStatement();
-    	String query = "SELECT * FROM provincia";
-    	ResultSet rs = stmt.executeQuery(query);
-    	
-    	int pos = 0;
-    	while (rs.next()) {
-    		Provincia p = new Provincia(rs.getInt("idProvincia"), rs.getString("nombre"));
-    		provincias[pos] = p;
-    		pos++;
-    	}
-    	
-    	rs.close();
-    	stmt.close();
-    	
-    	return provincias;
-    }
-    
     public void insertarProvincia (Provincia p) throws SQLException {
     	Statement stmt = con.createStatement();
     	String query = "INSERT INTO provincia (nombre) VALUES ('" + p.getNombre() + "')";
@@ -251,21 +212,6 @@ public class BaseDatos {
     public int numPropiedades() throws SQLException {
     	Statement stmt = con.createStatement();
     	String query = "SELECT COUNT(*) FROM propiedad";
-    	ResultSet rs = stmt.executeQuery(query);
-    	
-    	int num = 0;
-    	if (rs.next()) {
-    		num = rs.getInt(1);
-    	}
-    	
-    	rs.close();
-    	stmt.close();
-    	return num;
-    }
-    
-    public int numProvincias() throws SQLException {
-    	Statement stmt = con.createStatement();
-    	String query = "SELECT COUNT(*) FROM provincia";
     	ResultSet rs = stmt.executeQuery(query);
     	
     	int num = 0;
