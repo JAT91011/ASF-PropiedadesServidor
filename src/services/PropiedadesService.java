@@ -69,11 +69,4 @@ public class PropiedadesService {
 		BaseDatos.obtenerInstancia().borrarPropiedad(id);
 		BaseDatos.obtenerInstancia().desconectar();
 	}
-	
-	public Provincia[] obtenerProvincias() throws ClassNotFoundException, SQLException {
-		BaseDatos.obtenerInstancia().conectar();
-		Provincia[] provincias = BaseDatos.obtenerInstancia().obtenerProvincias();
-		BaseDatos.obtenerInstancia().desconectar();
-		return provincias;
-	}
 }
