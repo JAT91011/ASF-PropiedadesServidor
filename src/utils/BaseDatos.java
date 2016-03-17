@@ -153,27 +153,25 @@ public class BaseDatos {
     	stmt.close();
     }
     
-    public boolean existeProvinciaConNombre (String provincia) throws SQLException {
+    public Provincia[] obtenerProvincias() throws SQLException {
+    	int numProvincias = numProvincias();
+    	Provincia[] provincias = new Provincia[numProvincias];
+    	
     	Statement stmt = con.createStatement();
-		String query = "SELECT * FROM provincia WHERE nombre = '" + provincia + "'";
-        ResultSet rs = stmt.executeQuery(query);
-        
-        if (rs.next()) {
-        	rs.close();
-            stmt.close();
-        	return true;
-        } else {
-        	rs.close();
-            stmt.close();
-        	return false;
-        }
-    }
-    
-    public void insertarProvincia (Provincia p) throws SQLException {
-    	Statement stmt = con.createStatement();
-    	String query = "INSERT INTO provincia (nombre) VALUES ('" + p.getNombre() + "')";
-    	stmt.executeUpdate(query);
+    	String query = "SELECT * FROM provincia";
+    	ResultSet rs = stmt.executeQuery(query);
+    	
+    	int pos = 0;
+    	while (rs.next()) {
+    		Provincia p = new Provincia(rs.getInt("idProvincia"), rs.getString("nombre"));
+    		provincias[pos] = p;
+    		pos++;
+    	}
+    	
+    	rs.close();
     	stmt.close();
+    	
+    	return provincias;
     }
     
     public Provincia obtenerProvinciaPorNombre (String provincia) throws SQLException {
@@ -212,6 +210,21 @@ public class BaseDatos {
     public int numPropiedades() throws SQLException {
     	Statement stmt = con.createStatement();
     	String query = "SELECT COUNT(*) FROM propiedad";
+    	ResultSet rs = stmt.executeQuery(query);
+    	
+    	int num = 0;
+    	if (rs.next()) {
+    		num = rs.getInt(1);
+    	}
+    	
+    	rs.close();
+    	stmt.close();
+    	return num;
+    }
+    
+    public int numProvincias() throws SQLException {
+    	Statement stmt = con.createStatement();
+    	String query = "SELECT COUNT(*) FROM provincia";
     	ResultSet rs = stmt.executeQuery(query);
     	
     	int num = 0;
